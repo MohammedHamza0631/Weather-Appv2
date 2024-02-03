@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App Home</title>
+    <link rel="stylesheet" href="/css/home_styles.css" />
+  </head>
+  <body>
+    <div class="Project">
+      <div class="pro-container" id="Project">
+        <div class="project-card">
+          <div class="pro-content">
+            <h1>Weather App</h1>
+            <div class="header">
+              <div
+                class="inputBox_container"
+                onclick="handleSearchClick(event)"
+              >
+                <svg
+                  class="search_icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 48 48"
+                  alt="search icon"
+                >
+                  <path
+                    d="M46.599 46.599a4.498 4.498 0 0 1-6.363 0l-7.941-7.941C29.028 40.749 25.167 42 21 42 9.402 42 0 32.598 0 21S9.402 0 21 0s21 9.402 21 21c0 4.167-1.251 8.028-3.342 11.295l7.941 7.941a4.498 4.498 0 0 1 0 6.363zM21 6C12.717 6 6 12.714 6 21s6.717 15 15 15c8.286 0 15-6.714 15-15S29.286 6 21 6z"
+                  ></path>
+                </svg>
+                <form
+                  id="searchForm"
+                  action="/searchWeather"
+                  method="GET"
+                  onsubmit="return handleFormSubmit()"
+                >
+                  <input
+                    class="inputBox"
+                    id="inputBox"
+                    type="text"
+                    name="city"
+                    placeholder="Search For City"
+                  />
+                </form>
+              </div>
+              <button onclick="document.getElementById('searchForm').submit()">
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function handleSearchClick(event) {
+        const inputBox = document.getElementById("inputBox");
+        // Check if the click was inside the input field
+        if (!inputBox.contains(event.target)) {
+          // If not, submit the form
+          document.getElementById("searchForm").submit();
+        }
+      }
+
+      function handleFormSubmit() {
+        // You can perform any additional checks or processing here if needed
+        return true; // Returning true allows the form to be submitted
+      }
+    </script>
+  </body>
+</html>

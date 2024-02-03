@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather App</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="header">
+      <div class="toggle-container">
+        <label class="switch">
+          <input type="checkbox" id="toggle" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+      <div class="inputBox_container" onclick="handleSearchClick(event)">
+        <svg
+          class="search_icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 48 48"
+          alt="search icon"
+        >
+          <path
+            d="M46.599 46.599a4.498 4.498 0 0 1-6.363 0l-7.941-7.941C29.028 40.749 25.167 42 21 42 9.402 42 0 32.598 0 21S9.402 0 21 0s21 9.402 21 21c0 4.167-1.251 8.028-3.342 11.295l7.941 7.941a4.498 4.498 0 0 1 0 6.363zM21 6C12.717 6 6 12.714 6 21s6.717 15 15 15c8.286 0 15-6.714 15-15S29.286 6 21 6z"
+          ></path>
+        </svg>
+        <form
+          id="searchForm"
+          action="/searchWeather"
+          method="GET"
+          onsubmit="return handleFormSubmit()"
+        >
+          <input
+            class="inputBox"
+            id="inputBox"
+            type="text"
+            name="city"
+            placeholder="Search For City"
+          />
+        </form>
+      </div>
+    </div>
+
+    <div class="details">
+      <div class="date-time">
+        <span class="city"><%= cityName %></span>
+        <span class="time">
+          <%= cityTime %>
+        </span>
+        <span class="day">
+          <%= cityDay %>, <%= cityDate %>
+        </span>
+      </div>
+
+      <div class="weather">
+        <div class="col1">
+          <div class="weather-item temp">
+            <span>
+              <%= cityTemp %> &deg;C
+            </span>
+          </div>
+          <div class="weather-item temp-feels">
+            <span>
+              Feels like: <%= cityFeelsLike %>
+            </span>
+          </div>
+          <div class="weather-item sunrise-time">
+            <img
+              src="/images/weather-dashboard-black-sunrise-white-1.png"
+              alt="Sunrise Icon"
+            />
+            <span>
+              <%= citySunrise %>
+            </span>
+            <span>Sunrise</span>
+          </div>
+          <div class="weather-item sunset-time">
+            <img
+              src="/images/weather-dashboard-black-sunset-white-1.png"
+              alt="Sunset Icon"
+            />
+            <span>
+              <%= citySunset %>
+            </span>
+            <span>Sunset</span>
+          </div>
+        </div>
+        <div class="col2">
+          <div class="weather-item weather-type">
+            <img src="<%= cityWeatherIcon %>" height="170px" width="170px" alt="Weather Type
+            Icon" />
+            <span>
+              <% if (locals.cityCondition) { %> <%= cityCondition %> <% } else {
+              %> Weather Type <% } %>
+            </span>
+          </div>
+        </div>
+
+        <div class="col3">
+          <div class="row">
+            <div class="weather-item humidity">
+              <img
+                src="/images/weather-dashboard-black-humidity-1.png"
+                alt="Humidity Icon"
+              />
+              <span>
+                <% if (locals.cityHumidity) { %> <%= cityHumidity %>% <% } else
+                { %> Humidity <% } %>
+              </span>
+              <span>Humidity</span>
+            </div>
+            <div class="weather-item wind-speed">
+              <img
+                src="/images/weather-dashboard-black-wind-1.png"
+                alt="Wind Speed Icon"
+              />
+              <span>
+                <% if (locals.cityWind) { %> <%= cityWind %> Km/hr<% } else { %>
+                Wind Speed <% } %>
+              </span>
+              <span>Wind Speed</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="weather-item pressure">
+              <img
+                src="/images/weather-dashboard-black-pressure-white-1.png"
+                alt="Pressure Icon"
+              />
+              <span>
+                <% if (locals.cityPressure) { %> <%= cityPressure %> mb<% } else
+                { %> Pressure <% } %>
+              </span>
+              <span>Pressure</span>
+            </div>
+            <div class="weather-item uv-index">
+              <img
+                src="/images/weather-dashboard-black-uv-white-1.png"
+                alt="UV Index Icon"
+              />
+              <span>
+                <% if (locals.cityUv) { %> <%= cityUv %> <% } else { %> UV <% }
+                %>
+              </span>
+              <span>UV Index</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function handleSearchClick(event) {
+        const inputBox = document.getElementById("inputBox");
+        // Check if the click was inside the input field
+        if (!inputBox.contains(event.target)) {
+          // If not, submit the form
+          document.getElementById("searchForm").submit();
+        }
+      }
+
+      function handleFormSubmit() {
+        // You can perform any additional checks or processing here if needed
+        return true; // Returning true allows the form to be submitted
+      }
+    </script>
+
+    <script type="text/javascript">
+      document.addEventListener("DOMContentLoaded", function () {
+        const toggleSwitch = document.getElementById("toggle");
+        const body = document.body;
+        const weather = document.querySelector(".weather");
+        const date = document.querySelector(".date-time");
+
+        toggleSwitch.addEventListener("change", function () {
+          if (this.checked) {
+            body.classList.add("dark-mode");
+            weather.classList.add("dark-mode");
+            date.classList.add("dark-mode");
+          } else {
+            body.classList.remove("dark-mode");
+            weather.classList.remove("dark-mode");
+            date.classList.remove("dark-mode");
+          }
+        });
+      });
+      
+      // setInterval(() => {
+      //   let prev = document.querySelector(".time").innerHTML;
+      //   prev.innerHTML = Number(prev.innerHTML) + 1;
+      // }, 1000);
+    </script>
+  </body>
+</html>
