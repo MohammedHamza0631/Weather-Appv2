@@ -7,4 +7,4 @@ This is a weather app built using EJS, CSS, and JavaScript providing detailed we
 -  Type the command <code>node index.js</code> to start the server.
 - Open any web browser and type ```localhost:3000``` to run this Web-App.
 ### Method 2:
-- 
+- Access the site live <a href="https://weather-app-tgga.onrender.com/">here</a>.
