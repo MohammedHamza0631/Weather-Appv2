@@ -45,34 +45,26 @@
     <div class="details">
       <div class="date-time">
         <span class="city"><%= cityName %></span>
-        <span class="time">
-          <%= cityTime %>
+        <span class="time" id="currentTime">
+          <%= Hour %>:<%= Minute %>:<%= Second %>
         </span>
-        <span class="day">
-          <%= cityDay %>, <%= cityDate %>
-        </span>
+        <span class="day"> <%= cityDay %>, <%= cityDate %> </span>
       </div>
 
       <div class="weather">
         <div class="col1">
           <div class="weather-item temp">
-            <span>
-              <%= cityTemp %> &deg;C
-            </span>
+            <span> <%= cityTemp %> &deg;C </span>
           </div>
           <div class="weather-item temp-feels">
-            <span>
-              Feels like: <%= cityFeelsLike %>
-            </span>
+            <span> Feels like: <%= cityFeelsLike %> </span>
           </div>
           <div class="weather-item sunrise-time">
             <img
               src="/images/weather-dashboard-black-sunrise-white-1.png"
               alt="Sunrise Icon"
             />
-            <span>
-              <%= citySunrise %>
-            </span>
+            <span> <%= citySunrise %> </span>
             <span>Sunrise</span>
           </div>
           <div class="weather-item sunset-time">
@@ -80,16 +72,19 @@
               src="/images/weather-dashboard-black-sunset-white-1.png"
               alt="Sunset Icon"
             />
-            <span>
-              <%= citySunset %>
-            </span>
+            <span> <%= citySunset %> </span>
             <span>Sunset</span>
           </div>
         </div>
         <div class="col2">
           <div class="weather-item weather-type">
-            <img src="<%= cityWeatherIcon %>" height="170px" width="170px" alt="Weather Type
-            Icon" />
+            <img
+              src="<%= cityWeatherIcon %>"
+              height="170px"
+              width="170px"
+              alt="Weather Type
+            Icon"
+            />
             <span>
               <% if (locals.cityCondition) { %> <%= cityCondition %> <% } else {
               %> Weather Type <% } %>
@@ -184,11 +179,39 @@
           }
         });
       });
-      
-      // setInterval(() => {
-      //   let prev = document.querySelector(".time").innerHTML;
-      //   prev.innerHTML = Number(prev.innerHTML) + 1;
-      // }, 1000);
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Assuming cityTime is in the "HH:mm" format
+        let currentTime = document.getElementById("currentTime").innerHTML;
+        // Split the time string into hours and minutes
+        let [hours, minutes, seconds] = currentTime.split(":").map(Number);
+        
+        // Set up setInterval to increment the time every second
+        let intervalId = setInterval(() => {
+          // Increment seconds
+          seconds++;
+          if (seconds === 60) {
+            seconds = 0;
+            minutes++;
+            if (minutes === 60) {
+              minutes = 0;
+              hours++;
+              if (hours === 24) {
+                hours = 0;
+              }
+            }
+          }
+
+          // Format the time back to "HH:mm:ss"
+          let formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
+            .toString()
+            .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
+          // Update the UI or do whatever you need with the formatted time
+          document.getElementById("currentTime").innerHTML = formattedTime;
+        }, 1000);
+      });
     </script>
   </body>
 </html>

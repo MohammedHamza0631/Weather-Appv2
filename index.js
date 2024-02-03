@@ -13,15 +13,6 @@ const port = process.env.PORT || 3000;
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-
-  
-//   try {
-//       const response = await axios.request(options);
-//       console.log(response.data);
-//   } catch (error) {
-//       console.error(error);
-// }
-
 app.get('/', (req, res) => {
     res.render('home.ejs', { weather: null });
 });
@@ -54,14 +45,12 @@ app.get('/searchWeather', async (req, res) => {
         const timeApiUrl = `https://timeapi.io/api/Time/current/coordinate?latitude=${weatherResponse.location.lat}&longitude=${weatherResponse.location.lon}`;
         const timeApiAns = await axios.get(timeApiUrl);
         const timeData = timeApiAns.data;
-        // console.log(timeData);
-        // console.log(weatherData.data);
-        // console.log(weatherResponse.current.condition.icon);
-        // console.log(sunData.astronomy);
         res.render('index.ejs', {
             cityName: weatherResponse.location.name,
             cityDate: timeData.date,
-            cityTime: timeData.time,
+            Hour: timeData.hour,
+            Minute: timeData.minute,
+            Second: timeData.seconds,
             cityDay: timeData.dayOfWeek,
             cityTemp: weatherResponse.current.temp_c,
             cityFeelsLike: weatherResponse.current.feelslike_c,
