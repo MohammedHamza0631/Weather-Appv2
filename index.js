@@ -67,10 +67,7 @@ app.get('/searchWeather', async (req, res) => {
     } catch (error) {
         console.log(error);
     }
-
 });
-
-
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
